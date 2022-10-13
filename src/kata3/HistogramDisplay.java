@@ -10,9 +10,12 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 
 public class HistogramDisplay extends ApplicationFrame{
-
-    public HistogramDisplay(String title) {
+    
+    private final Histogram<String> histogram;
+    
+    public HistogramDisplay(String title, Histogram<String> histogram) {
         super(title);
+        this.histogram = histogram;
         setContentPane(createPanel());
         pack();
     }
@@ -43,11 +46,9 @@ public class HistogramDisplay extends ApplicationFrame{
     private DefaultCategoryDataset createDataSet(){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         
-        dataset.addValue(3, "", "ulpgc.es");
-        dataset.addValue(1, "", "dis.ulpgc.es");
-        dataset.addValue(7, "", "eil.ulpgc.es");
-        dataset.addValue(13, "", "gmail.com");
-        dataset.addValue(5, "", "hotmail.es");
+        for (String key : this.histogram.keySet()){
+            dataset.addValue(this.histogram.get(key), "", key);
+        }
         
         return dataset;
     }
